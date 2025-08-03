@@ -1,0 +1,160 @@
+﻿@model TbItem
+
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> Form elements </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+            </ol>
+        </nav>
+    </div>
+    <form class="forms-sample" method="post" enctype="multipart/form-data"
+          asp-controller="Items" asp-action="Save" role="form">
+        <div class="row">
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Default form</h4>
+                        <p class="card-description"> Basic form layout </p>
+
+                        <input asp-for="ItemId" type="hidden" />
+                        <input asp-for="CreatedBy" type="hidden" />
+                        <input asp-for="CreatedDate" type="hidden" />
+                        <input asp-for="CurrentState" type="hidden" />
+                        <input asp-for="ImageName" type="hidden" />
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">ItemName</label>
+                            <input asp-for="ItemName" type="text" class="form-control" placeholder="ItemName">
+                            <span asp-validation-for="ItemName"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">CategoryName</label>
+                            <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.lstCategories,"CategoryId","CategoryName"))"></select>
+                            <span asp-validation-for="CategoryId"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">ItemType</label>
+                            <select class="form-control" asp-for="ItemTypeId" asp-items="@(new SelectList(ViewBag.lstItemTypes,"ItemTypeId","ItemTypeName"))"></select>
+                            <span asp-validation-for="ItemTypeId"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Os</label>
+                            <select class="form-control" asp-for="OsId" asp-items="@(new SelectList(ViewBag.lstOs,"OsId","OsName"))"></select>
+                            <span asp-validation-for="ItemTypeId"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">SalesPrice</label>
+                            <input asp-for="SalesPrice" type="text" class="form-control" placeholder="SalesPrice">
+                            <span asp-validation-for="SalesPrice"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">PurchasePrice</label>
+                            <input asp-for="PurchasePrice" type="text" class="form-control" placeholder="PurchasePrice">
+                            <span asp-validation-for="PurchasePrice"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Weight</label>
+                            <input asp-for="Weight" type="text" class="form-control" placeholder="Weight">
+                            <span class="label-danger" asp-validation-for="Weight"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">
+                                Image
+                            </label>
+                            <input asp-for="ImageName" type="file" name="Files" multiple
+                                   class="form-control" placeholder="Image"
+                                   onchange="Upload.UploadDefaultImg(event)" accept=".jpg, .jpeg, .png, ,.gif">
+
+                        </div>
+
+                        <button type="submit" formmethod="post" class="btn btn-gradient-primary me-2">Save</button>
+                        <button class="btn btn-light">New</button>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Main Data</h4>
+                        <p class="card-description"> Basic form layout </p>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Gpu</label>
+                            <input asp-for="Gpu" type="text" class="form-control" placeholder="Gpu">
+                            <span class="label-danger" asp-validation-for="Gpu"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Processor</label>
+                            <input asp-for="Processor" type="text" class="form-control" placeholder="Processor">
+                            <span class="label-danger" asp-validation-for="Processor"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">HardDisk</label>
+                            <input asp-for="HardDisk" type="text" class="form-control" placeholder="HardDisk">
+                            <span class="label-danger" asp-validation-for="HardDisk"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">RamSize</label>
+                            <input asp-for="RamSize" type="number" class="form-control" placeholder="RamSize">
+                            <span class="label-danger" asp-validation-for="RamSize"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">ScreenReslution</label>
+                            <input asp-for="ScreenReslution" type="text" class="form-control" placeholder="ScreenReslution">
+                            <span class="label-danger" asp-validation-for="ScreenReslution"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">ScreenSize</label>
+                            <input asp-for="ScreenSize" type="text" class="form-control" placeholder="ScreenSize">
+                            <span class="label-danger" asp-validation-for="ScreenSize"></span>
+                        </div>
+                        <span id="tbImgName"></span>
+                        <div id="tbImgSrc">
+                            <img src="/Uploads/Items/@Model.ImageName" style="width:95%; height300px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+@section Scripts
+    {
+    <script>
+        var Upload = {
+            UploadDefaultImg: function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    CourseMediaImgName = file.name;
+                    CourseMediaImgBase64 = reader.result.slice(reader.result.indexOf('base64,') + 7);
+                    $("#tbImgName").html(file.name)
+                    $("#tbImgSrc").html(`<img class="thumbnail" src = "${reader.result}"  style = "width: 200px;height: 300px;border-radius: 5px;border: 1px solid #d9d9d9;padding: 1px;" />`)
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+}
+

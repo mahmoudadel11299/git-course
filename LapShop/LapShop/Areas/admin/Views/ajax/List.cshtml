@@ -1,0 +1,93 @@
+﻿
+
+
+
+<div class="container-fluid page-body-wrapper">
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h3 class="page-title"> Data table </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data table</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Data table</h4>
+                    <div class="row">
+                  
+                        <div class="col-12">
+
+                            <a href="/Admin/Items/Edit" class="btn btn-success btn-fw">New</a>
+
+
+                            <table id="order-listing" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>id </th>
+                                        <th>CategoryName </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="ItemArea">
+                                  
+                                
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->
+    </div>
+    <!-- main-panel ends -->
+</div>
+
+@section Scripts
+{
+   <script>
+       $(document).ready(function () {
+
+       
+               $.ajax({
+                    url: "/Home/getallite",
+                    dataType: "json",
+                    type:"GET",
+            contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        var htmlData = "";
+                  console.log(data);
+                  for (var i = 0; i < data.length; i++) {
+                        htmlData +=  `  <tr>
+                            <td>${data[i].CategoryId}</td>
+                              <td>${data[i].CategoryName}</td>
+                          </tr>`;
+                  }
+                  console.log(htmlData);
+                  var d1 = document.getElementById('ItemArea');
+                  d1.innerHTML = htmlData;
+                    },
+
+                    error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ": " + xhr.statusText + ": " + xhr.responseText + ": ";
+                        console.log("Error - " + errorMessage);
+                    }
+                    
+            });
+
+        });
+       
+   </script>
+  
+
+
+
+}
+
+

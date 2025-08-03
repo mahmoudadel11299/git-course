@@ -1,0 +1,35 @@
+﻿@model RoleModel
+
+
+<!--section start-->
+<section class="register-page section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>create account</h3>
+                <div class="theme-card">
+                    <form class="theme-form" method="post"
+                          asp-controller="Users" asp-action="CreateRole">
+                        <div class="form-row">
+
+                            <input type="hidden" asp-for="id" />
+                            <div class="col-md-6">
+                                <label for="email">First Name</label>
+                                <input asp-for="name"
+                                       type="text" class="form-control" id="fname" placeholder="First Name"
+                                       required="">
+                                <span asp-validation-for="name"></span>
+                            </div>
+                          
+                        </div>
+                        <div class="form-row">
+                          
+                            <button type="submit" class="btn btn-solid">create a role</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->
